@@ -24,7 +24,7 @@ Elegante CV site con traduzione offline istantanea e export PDF impeccabile.
 Porta: `http://localhost:8088`
 
 ```powershell
-cd .\cv-app
+# esegui dalla ROOT del repo
 docker compose up --build
 ```
 
@@ -32,9 +32,9 @@ docker compose up --build
 Richiede PHP 8.3 e Composer.
 
 ```powershell
-cd .\cv-app
+# esegui dalla ROOT del repo
 copy .env.example .env
-# Imposta APP_URL=http://localhost:8000
+# Oppure usa l'.env già presente per Docker
 composer install
 php artisan key:generate
 php -S 127.0.0.1:8000 -t public
@@ -66,7 +66,7 @@ Stili: `public/css/styles.css` include le regole speciali per il print.
 
 ### Struttura Progetto (essenziale)
 ```
-cv-app/
+./
 ├─ public/
 │  ├─ css/styles.css
 │  ├─ js/function.js
@@ -81,6 +81,9 @@ cv-app/
 ├─ Dockerfile
 └─ .env
 ```
+
+> Nota: in seguito a uno "split" della storia git, la root del progetto è questa cartella. Non esiste più la sottocartella `cv-app/`.
+
 
 ## ⚙️ Configurazione
 - **APP_URL**: (Docker) `http://localhost:8088` per link coerenti.
