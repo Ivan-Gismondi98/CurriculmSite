@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: cv-app-web
+    working_dir: /var/www/html
+    ports:
+      - "8088:8000"  # Host 8088 -> Container 8000 (PHP built-in server)
+    volumes:
+      - ./:/var/www/html
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8088
+    # No database container to avoid conflicts; uses SQLite file under database/
+
+networks:
+  default:
+    name: cv-app-network
