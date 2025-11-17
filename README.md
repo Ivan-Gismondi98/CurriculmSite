@@ -1,3 +1,105 @@
+<div align="center">
+
+# 🌟 CV App — Laravel‑Powered Resume
+
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?logo=laravel&logoColor=white)](#)
+[![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white)](#)
+[![Dockerized](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](#)
+[![Offline](https://img.shields.io/badge/Translation-Offline%20%26%20Deterministic-brightgreen)](#)
+
+Elegante CV site con traduzione offline istantanea e export PDF impeccabile.
+
+</div>
+
+## ✨ Le Chicche
+- **Traduzione istantanea (offline)**: pulsante "TRADUCI PAGINA" che traduce tutto (testi, placeholder, `title`, `document.title`) usando un dizionario deterministico lato client.
+- **PDF pulito e professionale**: export con `html2pdf.js`, margini e regole CSS anti-spazio-vuoto, numerazione pagine runtime, nessuna card tagliata.
+- **Layout solido**: sezioni CV non si spezzano a cavallo delle pagine; card esperienze e gruppi restano coesi (`break-inside: avoid`).
+- **UX veloce**: nessuna dipendenza server-side per tradurre o generare PDF; tutto avviene nel browser.
+- **Laravel + Blade**: contenuti Blade allineati 1:1 all'HTML originale per massima coerenza del dizionario.
+
+## 🚀 Avvio Rapido
+
+### Con Docker (consigliato)
+Porta: `http://localhost:8088`
+
+```powershell
+cd .\cv-app
+docker compose up --build
+```
+
+### Senza Docker (locale)
+Richiede PHP 8.3 e Composer.
+
+```powershell
+cd .\cv-app
+copy .env.example .env
+# Imposta APP_URL=http://localhost:8000
+composer install
+php artisan key:generate
+php -S 127.0.0.1:8000 -t public
+```
+
+Apri il browser su `http://localhost:8088` (Docker) oppure `http://127.0.0.1:8000` (locale).
+
+## 🧭 Come si usa
+- **Traduci pagina**: clic su "TRADUCI PAGINA" per passare IT ⇄ EN. Funziona offline grazie al dizionario in `public/js/translations.js`.
+- **Scarica PDF**: clic su "Scarica PDF" per ottenere un PDF pulito, numerato e senza pagine vuote.
+
+## 🛠️ Dettagli Tecnici
+
+### Traduzione Offline (Deterministica)
+- **Dizionario-only**: nessuna API; 100% client-side per risultati ripetibili.
+- **Normalizzazione testo**: rimozione spazi/accenti e match robusto anche se il DOM spezza i nodi.
+- **Attributi inclusi**: traduce `placeholder`, `title`, `aria-*` quando rilevanti e aggiorna `document.title`.
+- **Reversibile**: puoi tornare alla lingua originale senza perdita.
+
+Codice: `public/js/function.js` (motore) + `public/js/translations.js` (dizionario).
+
+### PDF Senza Sorprese
+- **Motore**: `html2pdf.js` con impostazioni mirate al CV (margini, scala, qualità).
+- **CSS-driven pagination**: classi `page-break-*` e `break-inside: avoid` su card e gruppi.
+- **No clip, no buchi**: evita tagli di header/esperienze e pagine vuote.
+- **Numeri di pagina**: aggiunti a runtime in modo coerente.
+
+Stili: `public/css/styles.css` include le regole speciali per il print.
+
+### Struttura Progetto (essenziale)
+```
+cv-app/
+├─ public/
+│  ├─ css/styles.css
+│  ├─ js/function.js
+│  ├─ js/translations.js
+│  └─ avatar.png
+├─ resources/
+│  └─ views/
+│     ├─ layouts/app.blade.php
+│     └─ cv.blade.php
+├─ routes/web.php
+├─ docker-compose.yml
+├─ Dockerfile
+└─ .env
+```
+
+## ⚙️ Configurazione
+- **APP_URL**: (Docker) `http://localhost:8088` per link coerenti.
+- **Docker**: espone `8088:8000` ed usa SQLite per evitare conflitti DB.
+- **Blade**: testi in `cv.blade.php` allineati all'`index.html` originale per copertura massima del dizionario.
+
+## 💡 Suggerimenti
+- Aggiungi nuove frasi al dizionario in `public/js/translations.js` mantenendo la stessa normalizzazione.
+- Se vedi una frase non tradotta, prendi la stringa esatta da `resources/views/cv.blade.php`.
+- Per screenshot/GIF, crea `docs/` e referenzia le immagini nel README.
+
+## 🗺️ Roadmap
+- Lingue aggiuntive (ES/DE) mantenendo l'approccio deterministico.
+- Tema scuro stampabile senza perdita di contrasto.
+- Esportazione DOCX opzionale con template.
+
+---
+
+Made with ❤️ using Laravel + a pinch of frontend magic.
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
